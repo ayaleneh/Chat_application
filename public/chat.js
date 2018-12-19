@@ -5,6 +5,7 @@ $(document).ready(function(){
   socket.connect('localhost:5000')
 
   $("#group-chat").hide()
+  $("#row").hide()
   $("#name").focus()
   $("form").submit(function(event){
     event.preventDefault()
@@ -39,13 +40,18 @@ $(document).ready(function(){
   })
   $("#send").click(function(){
     var msg = $("#message").val();
-    socket.emit("send", msg);
+    if(msg!==''){
+      socket.emit("send", msg);
+    }
+    
     $("#message").val("");
   });
-  $("message").keypress(function(e){
+  $("#message").keypress(function(e){
     if(e.which === 13) {
       var msg = $("#message").val();
-      socket.emit("send", msg);
+      if(msg!==''){
+        socket.emit("send", msg);
+      }
       $("#message").val("");
     }
   });
